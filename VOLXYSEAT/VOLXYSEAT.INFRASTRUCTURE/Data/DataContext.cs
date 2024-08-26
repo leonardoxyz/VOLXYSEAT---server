@@ -9,11 +9,6 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Data
     {
         private readonly IMediator _mediator;
         public const string DEFAULT_SCHEMA = "volxyseat";
-
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
-        }
-
         public DataContext(DbContextOptions<DataContext> options, IMediator mediator) : base(options)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));

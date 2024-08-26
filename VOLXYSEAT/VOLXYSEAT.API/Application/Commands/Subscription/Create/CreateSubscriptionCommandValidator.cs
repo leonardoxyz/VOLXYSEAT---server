@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using VOLXYSEAT.DOMAIN.Repositories;
 
-namespace VOLXYSEAT.API.Application.Commands.Subscription
+namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
 {
     public class CreateSubscriptionCommandValidator : AbstractValidator<CreateSubscriptionCommand>
     {

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VOLXYSEAT.DOMAIN.Core;
+﻿using VOLXYSEAT.DOMAIN.Core;
+using VOLXYSEAT.DOMAIN.Exceptions;
 
 namespace VOLXYSEAT.DOMAIN.Models
 {
@@ -35,5 +31,29 @@ namespace VOLXYSEAT.DOMAIN.Models
         public double Price { get; private set; }
         public DateTime CreatedOn { get; private set; }
         public DateTime UpdatedOn { get; private set; }
+
+        public void Close(string comment)
+        {
+            if(StatusId == SubscriptionStatus.Inactive)
+                throw new VolxyseatDomainException("Subscription is already inactive.");
+            
+            var oldStatus = StatusId;
+            StatusId = SubscriptionStatus.Inactive;
+            UpdatedOn = DateTime.UtcNow;
+
+            _histories.Add(new SubscriptionHistory(Id, "System", oldStatus, SubscriptionStatus.Inactive, comment));
+        }
+
+        public void Open(string comment)
+        {
+            if(StatusId == SubscriptionStatus.Active)
+                throw new VolxyseatDomainException("Subscription is already active.");
+            
+            var oldStatus = StatusId;
+            StatusId = SubscriptionStatus.Active;
+            UpdatedOn = DateTime.UtcNow;
+
+            _histories.Add(new SubscriptionHistory(Id, "System", oldStatus, SubscriptionStatus.Active, comment));
+        }
     }
 }

@@ -1,21 +1,21 @@
 ﻿using MediatR;
-using VOLXYSEAT.DOMAIN.Models;
+using VOLXYSEAT.DOMAIN.Exceptions;
 using VOLXYSEAT.DOMAIN.Repositories;
 
-namespace VOLXYSEAT.API.Application.Commands.Subscription
+namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
 {
     public class CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscriptionCommand, bool>
     {
-        private readonly ISubscriptionRepository     _repository;
+        private readonly ISubscriptionRepository _repository;
 
         public CreateSubscriptionCommandHandler(ISubscriptionRepository repository)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _repository = repository ?? throw new VolxyseatDomainException(nameof(repository));
         }
 
         public async Task<bool> Handle(CreateSubscriptionCommand request, CancellationToken cancellationToken)
         {
-            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (request == null) throw new VolxyseatDomainException(nameof(request));
 
             var subscription = new DOMAIN.Models.Subscription(
                 request.TypeId,

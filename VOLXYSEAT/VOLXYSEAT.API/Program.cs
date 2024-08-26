@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen();
 
 // Configure Entity Framework
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("Homologation")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Homologation")));
 
 // Register IVolxyseatRepository with VolxyseatRepository implementation
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();

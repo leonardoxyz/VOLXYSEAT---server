@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using VOLXYSEAT.DOMAIN.Models;
 
-namespace VOLXYSEAT.API.Application.Commands.Subscription
+namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
 {
     public record class CreateSubscriptionCommand(
         SubscriptionEnum TypeId,

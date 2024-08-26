@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Volxyseat.API.Application.Queries.Subscription;
-using VOLXYSEAT.API.Application.Commands.Subscription;
-using VOLXYSEAT.API.Application.Commands.User;
+using VOLXYSEAT.API.Application.Commands.Subscription.Close;
+using VOLXYSEAT.API.Application.Commands.Subscription.Create;
 using VOLXYSEAT.API.Application.Models.ViewModel.Subscription;
-using VOLXYSEAT.API.Application.Models.ViewModel.User;
+using VOLXYSEAT.API.Application.Request;
 
 namespace VOLXYSEAT.API.Controllers
 {
@@ -14,10 +14,12 @@ namespace VOLXYSEAT.API.Controllers
     public class SubscriptionController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<SubscriptionController> _logger;
 
-        public SubscriptionController(IMediator mediator)
+        public SubscriptionController(IMediator mediator , ILogger<SubscriptionController> logger)
         {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet("{id}")]
@@ -51,13 +53,22 @@ namespace VOLXYSEAT.API.Controllers
             return result ? Ok() : BadRequest();
         }
 
-        [HttpPost("/new-user")]
-        [ProducesResponseType(typeof(UserViewModel), (int)HttpStatusCode.OK)]
+        [HttpPost("{id:Guid}/states/action=close")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Post([FromBody] CreateUserCommand request)
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Close(Guid id, [FromBody] SubscriptionChangeStatusWithCommentRequest request)
         {
-            var result = await _mediator.Send(request);
-            return result ? Ok() : BadRequest();
+            if (request == null)
+                return BadRequest("Request cannot be null.");
+
+            var command = new CloseSubscriptionCommand(id, request.Comment);
+            var result = await _mediator.Send(command);
+
+            if (!result)
+                return BadRequest("Failed to close subscription.");
+
+            return Ok();
         }
     }
 }

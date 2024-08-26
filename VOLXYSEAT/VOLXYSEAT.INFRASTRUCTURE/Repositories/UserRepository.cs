@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VOLXYSEAT.DOMAIN.Core;
+﻿using VOLXYSEAT.DOMAIN.Core;
 using VOLXYSEAT.DOMAIN.Models;
 using VOLXYSEAT.DOMAIN.Repositories;
 using VOLXYSEAT.INFRASTRUCTURE.Data;

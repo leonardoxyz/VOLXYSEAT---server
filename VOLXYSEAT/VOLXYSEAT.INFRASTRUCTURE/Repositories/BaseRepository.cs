@@ -16,14 +16,15 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Repositories
             _dataContext = context ?? throw new ArgumentNullException(nameof(context));
             _entities = _dataContext.Set<TEntity>();
         }
-        public virtual void AddAsync(TEntity obj)
+
+        public virtual async Task AddAsync(TEntity obj)
         {
-            _entities.AddAsync(obj);
+            await _entities.AddAsync(obj);
         }
 
-        public virtual TEntity GetAsync(TKey id)
+        public virtual async Task<TEntity> GetAsync(TKey id)
         {
-            return _entities.Find(id);
+            return await _entities.FindAsync(id);
         }
 
         public virtual void Update(TEntity obj)

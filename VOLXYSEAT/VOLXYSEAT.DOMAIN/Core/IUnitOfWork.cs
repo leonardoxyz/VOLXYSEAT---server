@@ -9,6 +9,5 @@ namespace VOLXYSEAT.DOMAIN.Core
     public interface IUnitOfWork : IDisposable
     {
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
-        //SaveEntitiesAsync?
     }
 }

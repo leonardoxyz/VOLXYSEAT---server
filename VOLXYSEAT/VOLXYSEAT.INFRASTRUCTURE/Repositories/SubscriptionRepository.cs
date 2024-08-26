@@ -22,5 +22,15 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Repositories
         {
             return _entities.ToList();
         }
+
+        public void AddAsync(Subscription obj)
+        {
+            _entities.AddAsync(obj);
+        }
+
+        public virtual void Update(Subscription obj)
+        {
+            _entities.Update(obj);
+        }
     }
 }
