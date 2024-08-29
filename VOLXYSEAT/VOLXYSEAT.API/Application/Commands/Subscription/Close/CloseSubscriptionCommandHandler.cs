@@ -21,7 +21,7 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Close
 
             subscription.Close(request.Comment);
 
-            _repository.Update(subscription);
+            await _repository.UpdateAsync(subscription);
 
             var result = await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
             return result > 0;

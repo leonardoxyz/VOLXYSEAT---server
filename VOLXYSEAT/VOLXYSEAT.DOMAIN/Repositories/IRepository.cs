@@ -7,7 +7,7 @@ namespace VOLXYSEAT.DOMAIN.Repositories
     {
         Task AddAsync(TEntity obj);
         Task<TEntity> GetAsync(TKey id);
-        void Update(TEntity obj);
+        Task<TEntity> UpdateAsync(TEntity obj);
         IUnitOfWork UnitOfWork { get; }
     }
 }

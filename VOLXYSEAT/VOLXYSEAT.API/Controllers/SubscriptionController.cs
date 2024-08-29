@@ -23,11 +23,17 @@ namespace VOLXYSEAT.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(SubscriptionViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SubscriptionViewModel), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(Guid id)
         {
             var query = new GetSubscriptionQuery(id);
-
             var result = await _mediator.Send(query);
+
+            if (result == null)
+            {
+                return NoContent();
+            }
 
             return Ok(result);
         }
