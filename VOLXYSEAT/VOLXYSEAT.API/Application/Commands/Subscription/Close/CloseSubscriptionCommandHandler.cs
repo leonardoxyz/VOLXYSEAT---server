@@ -22,7 +22,7 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Close
 
             subscription.Close(request.Comment);
 
-            _repository.Update(subscription);
+            await _repository.UpdateAsync(subscription);
 
             try
             {

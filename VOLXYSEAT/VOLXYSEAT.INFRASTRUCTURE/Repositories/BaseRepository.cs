@@ -27,14 +27,16 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Repositories
             return await _entities.FindAsync(id);
         }
 
-        public virtual void Update(TEntity obj)
+        public virtual async Task<TEntity> UpdateAsync(TEntity obj)
         {
             _entities.Update(obj);
+            return await Task.FromResult(obj);
         }
 
         public async Task<int> SaveChangesAsync()
         {
-            return await _dataContext.SaveChangesAsync().ConfigureAwait(false);
+            var item = await _dataContext.SaveChangesAsync().ConfigureAwait(false);
+            return item;
         }
     }
 }
