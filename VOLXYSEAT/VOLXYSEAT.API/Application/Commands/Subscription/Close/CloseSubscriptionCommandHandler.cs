@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using VOLXYSEAT.DOMAIN.Exceptions;
 using VOLXYSEAT.DOMAIN.Repositories;
 
@@ -23,8 +24,36 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Close
 
             _repository.Update(subscription);
 
-            var result = await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
-            return result > 0;
+            try
+            {
+                var result = await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
+                return result > 0;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                // Recuperar as entradas que causaram o conflito
+                foreach (var entry in ex.Entries)
+                {
+                    if (entry.Entity is DOMAIN.Models.Subscription)
+                    {
+                        var proposedValues = entry.CurrentValues;
+                        var databaseValues = entry.GetDatabaseValues();
+
+                        if (databaseValues == null)
+                        {
+                            throw new VolxyseatDomainException("The subscription was deleted by another user.");
+                        }
+
+                        // Exemplo: resolve os conflitos aceitando os valores do banco de dados
+                        entry.OriginalValues.SetValues(databaseValues);
+                    }
+                }
+
+                // Tente salvar novamente as alterações
+                await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+
         }
     }
 }

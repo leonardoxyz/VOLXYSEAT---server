@@ -9,6 +9,7 @@ namespace VOLXYSEAT.DOMAIN.Repositories
 {
     public interface ISubscriptionRepository : IRepository<Subscription, Guid>
     {
+        void AddAsync(Subscription obj);
         IEnumerable<Subscription> GetAll();
         Task<Subscription> GetByIdAsync(Guid id);
     }

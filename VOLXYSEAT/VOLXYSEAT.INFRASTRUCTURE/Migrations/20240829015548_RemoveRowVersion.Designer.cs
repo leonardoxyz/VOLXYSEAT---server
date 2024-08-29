@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VOLXYSEAT.INFRASTRUCTURE.Data;
 
@@ -11,9 +12,11 @@ using VOLXYSEAT.INFRASTRUCTURE.Data;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240829015548_RemoveRowVersion")]
+    partial class RemoveRowVersion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,7 +111,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.SubscriptionHistory", b =>
                 {
                     b.HasOne("VOLXYSEAT.DOMAIN.Models.Subscription", null)
-                        .WithMany("History")
+                        .WithMany("Histories")
                         .HasForeignKey("SubscriptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -116,7 +119,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.Subscription", b =>
                 {
-                    b.Navigation("History");
+                    b.Navigation("Histories");
                 });
 #pragma warning restore 612, 618
         }

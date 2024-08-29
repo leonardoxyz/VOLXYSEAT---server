@@ -5,7 +5,7 @@
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     /// <inheritdoc />
-    public partial class UpRow : Migration
+    public partial class rowVersion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -13,9 +13,9 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
             migrationBuilder.AddColumn<byte[]>(
                 name: "RowVersion",
                 table: "Subscriptions",
-                type: "varbinary(max)",
-                nullable: false,
-                defaultValue: new byte[0]);
+                type: "rowversion",
+                rowVersion: true,
+                nullable: true);
         }
 
         /// <inheritdoc />
