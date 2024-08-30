@@ -11,13 +11,15 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.IncludeFields = true;
 });
-;
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configure Entity Framework
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Homologation")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("Homologation"), options => options.EnableRetryOnFailure())
+    );
 
 // Register IVolxyseatRepository with VolxyseatRepository implementation
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
