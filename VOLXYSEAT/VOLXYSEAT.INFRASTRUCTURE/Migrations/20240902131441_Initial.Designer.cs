@@ -12,8 +12,8 @@ using VOLXYSEAT.INFRASTRUCTURE.Data;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240829112111_TestRowVersion")]
-    partial class TestRowVersion
+    [Migration("20240902131441_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,11 +39,6 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
@@ -116,15 +111,15 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.SubscriptionHistory", b =>
                 {
                     b.HasOne("VOLXYSEAT.DOMAIN.Models.Subscription", null)
-                        .WithMany("Histories")
+                        .WithMany("History")
                         .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Subscription_SubscriptionHistory");
                 });
 
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.Subscription", b =>
                 {
-                    b.Navigation("Histories");
+                    b.Navigation("History");
                 });
 #pragma warning restore 612, 618
         }

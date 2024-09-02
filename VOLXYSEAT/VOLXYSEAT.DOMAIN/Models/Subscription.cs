@@ -27,7 +27,6 @@ namespace VOLXYSEAT.DOMAIN.Models
             Price = price;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
-            _histories = new List<SubscriptionHistory>();
         }
 
         public SubscriptionEnum TypeId { get; private set; }
@@ -36,7 +35,7 @@ namespace VOLXYSEAT.DOMAIN.Models
         public double Price { get; private set; }
         public DateTime CreatedOn { get; private set; }
         public DateTime UpdatedOn { get; private set; }
-        public List<SubscriptionHistory> History { get; private set; } = new List<SubscriptionHistory>();
+        public List<SubscriptionHistory> History => _histories;
 
         public void Close(string comment)
         {
@@ -44,13 +43,10 @@ namespace VOLXYSEAT.DOMAIN.Models
                 throw new VolxyseatDomainException("Subscription is already inactive.");
 
             var oldStatus = StatusId;
-            lock (_histories)
-            {
-                StatusId = SubscriptionStatus.Inactive;
-                UpdatedOn = DateTime.UtcNow;
+            StatusId = SubscriptionStatus.Inactive;
+            UpdatedOn = DateTime.UtcNow;
 
-                _histories.Add(new SubscriptionHistory(Id, "System", oldStatus, SubscriptionStatus.Inactive, comment));
-            }
+            _histories.Add(new SubscriptionHistory(Id, "System", oldStatus, SubscriptionStatus.Inactive, comment));
         }
 
         public void Open(string comment)

@@ -23,9 +23,13 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
 
             modelBuilder.Entity<Subscription>()
-            .HasMany(s => s.History)
-            .WithOne()
-            .HasForeignKey(h => h.SubscriptionId);
+                .HasMany(s => s.History)
+                .WithOne()
+                .HasForeignKey(h => h.SubscriptionId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Subscription_SubscriptionHistory");
+
         }
     }
 }

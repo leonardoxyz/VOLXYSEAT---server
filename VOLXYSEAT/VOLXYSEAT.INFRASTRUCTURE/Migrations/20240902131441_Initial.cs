@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,11 +59,10 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                 {
                     table.PrimaryKey("PK_SubscriptionHistories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SubscriptionHistories_Subscriptions_SubscriptionId",
+                        name: "FK_Subscription_SubscriptionHistory",
                         column: x => x.SubscriptionId,
                         principalTable: "Subscriptions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

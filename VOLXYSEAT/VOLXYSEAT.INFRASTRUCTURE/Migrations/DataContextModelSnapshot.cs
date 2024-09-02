@@ -110,8 +110,8 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                     b.HasOne("VOLXYSEAT.DOMAIN.Models.Subscription", null)
                         .WithMany("History")
                         .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Subscription_SubscriptionHistory");
                 });
 
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.Subscription", b =>
