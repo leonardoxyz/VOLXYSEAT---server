@@ -65,6 +65,44 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SubscriptionProperties",
+                columns: table => new
+                {
+                    SubscriptionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Support = table.Column<bool>(type: "bit", nullable: false),
+                    Phone = table.Column<bool>(type: "bit", nullable: false),
+                    Email = table.Column<bool>(type: "bit", nullable: false),
+                    Messenger = table.Column<bool>(type: "bit", nullable: false),
+                    Chat = table.Column<bool>(type: "bit", nullable: false),
+                    LiveSupport = table.Column<bool>(type: "bit", nullable: false),
+                    Documentation = table.Column<bool>(type: "bit", nullable: false),
+                    Onboarding = table.Column<bool>(type: "bit", nullable: false),
+                    Training = table.Column<bool>(type: "bit", nullable: false),
+                    Updates = table.Column<bool>(type: "bit", nullable: false),
+                    Backup = table.Column<bool>(type: "bit", nullable: false),
+                    Customization = table.Column<bool>(type: "bit", nullable: false),
+                    Analytics = table.Column<bool>(type: "bit", nullable: false),
+                    Integration = table.Column<bool>(type: "bit", nullable: false),
+                    APIAccess = table.Column<bool>(type: "bit", nullable: false),
+                    CloudStorage = table.Column<bool>(type: "bit", nullable: false),
+                    MultiUser = table.Column<bool>(type: "bit", nullable: false),
+                    PrioritySupport = table.Column<bool>(type: "bit", nullable: false),
+                    SLA = table.Column<bool>(type: "bit", nullable: false),
+                    ServiceLevel = table.Column<bool>(type: "bit", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubscriptionProperties", x => x.SubscriptionId);
+                    table.ForeignKey(
+                        name: "FK_SubscriptionProperties_Subscriptions_SubscriptionId",
+                        column: x => x.SubscriptionId,
+                        principalTable: "Subscriptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_SubscriptionHistories_SubscriptionId",
                 table: "SubscriptionHistories",
@@ -76,6 +114,9 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
         {
             migrationBuilder.DropTable(
                 name: "SubscriptionHistories");
+
+            migrationBuilder.DropTable(
+                name: "SubscriptionProperties");
 
             migrationBuilder.DropTable(
                 name: "Users");

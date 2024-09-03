@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using VOLXYSEAT.DOMAIN.Models;
 
 namespace VOLXYSEAT.DOMAIN.Repositories
 {
     public interface ISubscriptionRepository : IRepository<Subscription, Guid>
     {
-        void AddAsync(Subscription obj);
-        IEnumerable<Subscription> GetAll();
+        Task AddAsync(Subscription obj);
+        Task<IEnumerable<Subscription>> GetAllAsync();
         Task<Subscription> GetByIdAsync(Guid id);
     }
 }

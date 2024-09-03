@@ -7,6 +7,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VOLXYSEAT.DOMAIN.Exceptions;
 using VOLXYSEAT.DOMAIN.Models;
 using VOLXYSEAT.DOMAIN.Repositories;
 using VOLXYSEAT.INFRASTRUCTURE.Data;
@@ -16,9 +17,11 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Repositories
     public class SubscriptionRepository : BaseRepository<Subscription, Guid>, ISubscriptionRepository
     {
         private readonly IDbConnection _dbConnection;
+        private readonly DataContext _context;
         public SubscriptionRepository(DataContext context, IDbConnection dbConnection) : base(context)
         {
             _dbConnection = dbConnection;
+            _context = context;
         }
 
         public async Task<Subscription> GetByIdAsync(Guid id)
@@ -29,21 +32,25 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Repositories
             return result;
         }
 
-        public IEnumerable<Subscription> GetAll()
+        public async Task AddAsync(Subscription subscription)
         {
-            return _entities
-                .AsNoTracking()
-                .ToList();
+            if (subscription == null) throw new VolxyseatDomainException(nameof(subscription));
+
+            await _context.Set<Subscription>().AddAsync(subscription);
+            await _context.SaveChangesAsync();
         }
 
-        public void AddAsync(Subscription obj)
-        {
-            _entities.AddAsync(obj);
-        }
 
         public virtual void Update(Subscription obj)
         {
             _entities.Update(obj);
+        }
+
+        public async Task<IEnumerable<Subscription>> GetAllAsync()
+        {
+            var query = "SELECT * FROM Subscriptions";
+            var result = await _dbConnection.QueryAsync<Subscription>(query);
+            return result;
         }
     }
 }

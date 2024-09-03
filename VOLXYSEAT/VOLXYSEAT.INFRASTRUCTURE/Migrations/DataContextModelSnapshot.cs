@@ -79,6 +79,79 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                     b.ToTable("SubscriptionHistories");
                 });
 
+            modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.SubscriptionProperties", b =>
+                {
+                    b.Property<Guid>("SubscriptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("APIAccess")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Analytics")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Backup")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Chat")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CloudStorage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Customization")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Documentation")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Email")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Integration")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LiveSupport")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Messenger")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MultiUser")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Onboarding")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Phone")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("PrioritySupport")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("SLA")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ServiceLevel")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Support")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Training")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Updates")
+                        .HasColumnType("bit");
+
+                    b.HasKey("SubscriptionId");
+
+                    b.ToTable("SubscriptionProperties");
+                });
+
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -114,9 +187,22 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasConstraintName("FK_Subscription_SubscriptionHistory");
                 });
 
+            modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.SubscriptionProperties", b =>
+                {
+                    b.HasOne("VOLXYSEAT.DOMAIN.Models.Subscription", "Subscription")
+                        .WithOne("SubscriptionProperties")
+                        .HasForeignKey("VOLXYSEAT.DOMAIN.Models.SubscriptionProperties", "SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subscription");
+                });
+
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.Subscription", b =>
                 {
                     b.Navigation("History");
+
+                    b.Navigation("SubscriptionProperties");
                 });
 #pragma warning restore 612, 618
         }

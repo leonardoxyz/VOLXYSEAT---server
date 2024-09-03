@@ -7,12 +7,12 @@ namespace VOLXYSEAT.DOMAIN.Models
     public class Subscription : Entity
     {
         private readonly List<SubscriptionHistory> _histories;
+        public SubscriptionProperties SubscriptionProperties { get; set; }
 
         private Subscription()
         {
             _histories = new List<SubscriptionHistory>();
         }
-
         public Subscription(
             SubscriptionEnum typeId,
             SubscriptionStatus statusId,
@@ -28,7 +28,6 @@ namespace VOLXYSEAT.DOMAIN.Models
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
         }
-
         public SubscriptionEnum TypeId { get; private set; }
         public SubscriptionStatus StatusId { get; private set; }
         public string Description { get; private set; }
