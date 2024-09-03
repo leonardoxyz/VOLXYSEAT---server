@@ -32,11 +32,32 @@ namespace VOLXYSEAT.API.Application.Queries.Subscription
                 Description = subscription.Description,
                 Price = subscription.Price,
                 CreatedOn = subscription.CreatedOn,
-                UpdatedOn = subscription.UpdatedOn
+                UpdatedOn = subscription.UpdatedOn,
+                SubscriptionProperties = new SubscriptionPropertiesDto
+                {
+                    Support = subscription.SubscriptionProperties.Support,
+                    Phone = subscription.SubscriptionProperties.Phone,
+                    Email = subscription.SubscriptionProperties.Email,
+                    Messenger = subscription.SubscriptionProperties.Messenger,
+                    Chat = subscription.SubscriptionProperties.Chat,
+                    LiveSupport = subscription.SubscriptionProperties.LiveSupport,
+                    Documentation = subscription.SubscriptionProperties.Documentation,
+                    Onboarding = subscription.SubscriptionProperties.Onboarding,
+                    Training = subscription.SubscriptionProperties.Training,
+                    Updates = subscription.SubscriptionProperties.Updates,
+                    Backup = subscription.SubscriptionProperties.Backup,
+                    Customization = subscription.SubscriptionProperties.Customization,
+                    Analytics = subscription.SubscriptionProperties.Analytics,
+                    Integration = subscription.SubscriptionProperties.Integration,
+                    APIAccess = subscription.SubscriptionProperties.APIAccess,
+                    CloudStorage = subscription.SubscriptionProperties.CloudStorage,
+                    MultiUser = subscription.SubscriptionProperties.MultiUser,
+                    PrioritySupport = subscription.SubscriptionProperties.PrioritySupport,
+                    SLA = subscription.SubscriptionProperties.SLA,
+                    ServiceLevel = subscription.SubscriptionProperties.ServiceLevel
+                }
             };
-
             return subscriptionDto;
         }
     }
-
 }

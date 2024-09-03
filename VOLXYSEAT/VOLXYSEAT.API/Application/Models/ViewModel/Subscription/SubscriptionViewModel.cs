@@ -1,4 +1,5 @@
-﻿using VOLXYSEAT.DOMAIN.Models;
+﻿using VOLXYSEAT.API.Application.Models.Dtos.Subscription;
+using VOLXYSEAT.DOMAIN.Models;
 
 namespace VOLXYSEAT.API.Application.Models.ViewModel.Subscription
 {
@@ -10,5 +11,6 @@ namespace VOLXYSEAT.API.Application.Models.ViewModel.Subscription
         public double Price { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
+        public SubscriptionPropertiesDto SubscriptionProperties { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using VOLXYSEAT.INFRASTRUCTURE.Data;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240826015956_UpRow")]
-    partial class UpRow
+    [Migration("20240903015243_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Subscription", b =>
+            modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.Subscription", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,15 +35,10 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
@@ -66,7 +61,6 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NewStatus")
@@ -79,7 +73,6 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -89,6 +82,79 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                     b.ToTable("SubscriptionHistories");
                 });
 
+            modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.SubscriptionProperties", b =>
+                {
+                    b.Property<Guid>("SubscriptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("APIAccess")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Analytics")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Backup")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Chat")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CloudStorage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Customization")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Documentation")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Email")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Integration")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LiveSupport")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Messenger")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MultiUser")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Onboarding")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Phone")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("PrioritySupport")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("SLA")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ServiceLevel")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Support")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Training")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Updates")
+                        .HasColumnType("bit");
+
+                    b.HasKey("SubscriptionId");
+
+                    b.ToTable("SubscriptionProperties");
+                });
+
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -96,23 +162,18 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordConfirm")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -122,16 +183,29 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.SubscriptionHistory", b =>
                 {
-                    b.HasOne("Subscription", null)
-                        .WithMany("Histories")
+                    b.HasOne("VOLXYSEAT.DOMAIN.Models.Subscription", null)
+                        .WithMany("History")
                         .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Subscription_SubscriptionHistory");
                 });
 
-            modelBuilder.Entity("Subscription", b =>
+            modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.SubscriptionProperties", b =>
                 {
-                    b.Navigation("Histories");
+                    b.HasOne("VOLXYSEAT.DOMAIN.Models.Subscription", "Subscription")
+                        .WithOne("SubscriptionProperties")
+                        .HasForeignKey("VOLXYSEAT.DOMAIN.Models.SubscriptionProperties", "SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.Subscription", b =>
+                {
+                    b.Navigation("History");
+
+                    b.Navigation("SubscriptionProperties");
                 });
 #pragma warning restore 612, 618
         }

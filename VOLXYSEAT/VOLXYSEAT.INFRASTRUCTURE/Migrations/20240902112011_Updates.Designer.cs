@@ -12,8 +12,8 @@ using VOLXYSEAT.INFRASTRUCTURE.Data;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240826004022_Initial")]
-    partial class Initial
+    [Migration("20240902112011_Updates")]
+    partial class Updates
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,6 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
@@ -62,7 +61,6 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NewStatus")
@@ -75,7 +73,6 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -92,23 +89,18 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordConfirm")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -119,7 +111,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.SubscriptionHistory", b =>
                 {
                     b.HasOne("VOLXYSEAT.DOMAIN.Models.Subscription", null)
-                        .WithMany("Histories")
+                        .WithMany("History")
                         .HasForeignKey("SubscriptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -127,7 +119,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.Subscription", b =>
                 {
-                    b.Navigation("Histories");
+                    b.Navigation("History");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
@@ -18,7 +18,8 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Volxyseat.Infrastructure\Volxyseat.Infrastructure.csproj" />
+		<ProjectReference Include="..\VOLXYSEAT.DOMAIN\VOLXYSEAT.DOMAIN.csproj" />
+		<ProjectReference Include="..\VOLXYSEAT.INFRASTRUCTURE\VOLXYSEAT.INFRASTRUCTURE.csproj" />
 	</ItemGroup>
 
 </Project>

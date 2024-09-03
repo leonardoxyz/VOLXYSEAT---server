@@ -9,16 +9,10 @@ namespace VOLXYSEAT.DOMAIN.Core
 {
     public interface IEntity
     {
-        void ClearDomainEvents();
     }
 
     public abstract class Entity : IEntity
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-
-        public void ClearDomainEvents()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

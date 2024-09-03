@@ -11,5 +11,6 @@ namespace VOLXYSEAT.API.Application.Models.Dtos.Subscription
         public double Price { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
+        public SubscriptionPropertiesDto SubscriptionProperties { get; set; }
     }
 }

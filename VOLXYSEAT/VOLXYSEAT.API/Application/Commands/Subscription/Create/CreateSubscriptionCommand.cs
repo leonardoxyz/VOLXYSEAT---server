@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using System;
+using VOLXYSEAT.API.Application.Models.Dtos.Subscription;
 using VOLXYSEAT.DOMAIN.Models;
 
 namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
@@ -9,8 +11,6 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
         string Description,
         double Price,
         DateTime CreatedOn,
-        DateTime UpdatedOn) : IRequest<bool>
-    {
-
-    }
+        DateTime UpdatedOn,
+        SubscriptionPropertiesDto SubscriptionProperties) : IRequest<bool>;
 }

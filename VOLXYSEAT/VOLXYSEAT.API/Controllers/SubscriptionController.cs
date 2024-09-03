@@ -45,14 +45,17 @@ namespace VOLXYSEAT.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllSubscriptionQuery();
-            var person = await _mediator.Send(query);
-            return person != null ? Ok(person) : NotFound();
+            var subscriptions = await _mediator.Send(query);
+
+            if (subscriptions == null || !subscriptions.Any())
+                return NotFound("No subscriptions found.");
+
+            return Ok(subscriptions);
         }
 
         [HttpPost("/new-subscription")]
         [ProducesResponseType(typeof(SubscriptionViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-
         public async Task<IActionResult> Post([FromBody] CreateSubscriptionCommand request)
         {
             var result = await _mediator.Send(request);

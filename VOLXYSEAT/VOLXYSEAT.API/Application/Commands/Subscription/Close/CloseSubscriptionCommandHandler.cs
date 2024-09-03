@@ -12,19 +12,22 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Close
         {
             _repository = repository ?? throw new VolxyseatDomainException(nameof(repository));
         }
+
         public async Task<bool> Handle(CloseSubscriptionCommand request, CancellationToken cancellationToken)
         {
-            if (request == null) throw new VolxyseatDomainException(nameof(request));
-
             var subscription = await _repository.GetByIdAsync(request.Id);
-            if (subscription == null) throw new VolxyseatDomainException("Subscription does not exist");
+
+            if (subscription == null)
+                throw new VolxyseatDomainException("Subscription not found");
+
+            subscription.Close(request.Comment);
 
             subscription.Close(request.Comment);
 
             await _repository.UpdateAsync(subscription);
+            await _repository.UnitOfWork.SaveChangesAsync();
 
-            var result = await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
-            return result > 0;
+            return true;
         }
     }
 }
