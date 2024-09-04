@@ -3,10 +3,11 @@ using VOLXYSEAT.DOMAIN.Core;
 using VOLXYSEAT.DOMAIN.Models;
 using MediatR;
 using VOLXYSEAT.INFRASTRUCTURE.Data.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace VOLXYSEAT.INFRASTRUCTURE.Data
 {
-    public class DataContext : DbContext, IUnitOfWork
+    public class DataContext : IdentityDbContext<User>, IUnitOfWork
     {
         private readonly IMediator _mediator;
         public const string DEFAULT_SCHEMA = "volxyseat";
@@ -17,12 +18,13 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Data
         }
 
         public DbSet<Subscription> Subscriptions { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<SubscriptionHistory> SubscriptionHistories { get; set; }
         public DbSet<SubscriptionProperties> SubscriptionProperties { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
             modelBuilder.ApplyConfiguration(new SubscriptionPropertiesConfiguration());
 

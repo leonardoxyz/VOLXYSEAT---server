@@ -7,9 +7,9 @@ using VOLXYSEAT.DOMAIN.Models;
 
 namespace VOLXYSEAT.DOMAIN.Repositories
 {
-    public interface IUserRepository : IRepository<User, Guid>
-    {
-        IEnumerable<User> GetAll();
-        Task<User> GetByIdAsync(Guid id);
-    }
+    //public interface IUserRepository : IRepository<User, Guid>
+    //{
+    //    IEnumerable<User> GetAll();
+    //    Task<User> GetByIdAsync(Guid id);
+    //}
 }
