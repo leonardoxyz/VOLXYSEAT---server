@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Azure.Core;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,20 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Repositories
 
         public async Task<Subscription> GetByIdAsync(Guid id)
         {
-            var query = "SELECT * FROM Subscriptions WHERE Id = @Id";
+            var query = "SELECT s.*, sp.* FROM Subscriptions s LEFT JOIN SubscriptionProperties sp ON s.Id = sp.SubscriptionId WHERE s.Id = @Id";
             var parameters = new { Id = id };
-            var result = await _dbConnection.QuerySingleOrDefaultAsync<Subscription>(query, parameters);
-            return result;
+            var result = await _dbConnection.QueryAsync<Subscription, SubscriptionProperties, Subscription>(
+            query,
+            (subscription, properties) =>
+            {
+                subscription.SubscriptionProperties = properties;
+                properties.Subscription = subscription;
+                return subscription;
+            },
+            new { Id = id },
+            splitOn: "SubscriptionId"
+            );
+            return result.SingleOrDefault();
         }
 
         public async Task AddAsync(Subscription subscription)
@@ -48,8 +59,22 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Repositories
 
         public async Task<IEnumerable<Subscription>> GetAllAsync()
         {
-            var query = "SELECT * FROM Subscriptions";
-            var result = await _dbConnection.QueryAsync<Subscription>(query);
+            var sql = @"
+            SELECT s.*, sp.*
+            FROM Subscriptions s
+            LEFT JOIN SubscriptionProperties sp ON s.Id = sp.SubscriptionId";
+
+            var result = await _dbConnection.QueryAsync<Subscription, SubscriptionProperties, Subscription>(
+                sql,
+                (subscription, properties) =>
+                {
+                    subscription.SubscriptionProperties = properties;
+                    properties.Subscription = subscription;
+                    return subscription;
+                },
+                splitOn: "SubscriptionId"
+            );
+
             return result;
         }
     }

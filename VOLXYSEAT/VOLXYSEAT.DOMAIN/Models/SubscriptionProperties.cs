@@ -9,26 +9,26 @@ namespace VOLXYSEAT.DOMAIN.Models
 
         public SubscriptionProperties(
             Guid subscriptionId,
-            bool support = false,
-            bool phone = false,
-            bool email = false,
-            bool messenger = false,
-            bool chat = false,
-            bool liveSupport = false,
-            bool documentation = false,
-            bool onboarding = false,
-            bool training = false,
-            bool updates = false,
-            bool backup = false,
-            bool customization = false,
-            bool analytics = false,
-            bool integration = false,
-            bool apiAccess = false,
-            bool cloudStorage = false,
-            bool multiUser = false,
-            bool prioritySupport = false,
-            bool sla = false,
-            bool serviceLevel = false
+            bool support,
+            bool phone,
+            bool email,
+            bool messenger,
+            bool chat,
+            bool liveSupport,
+            bool documentation,
+            bool onboarding,
+            bool training,
+            bool updates,
+            bool backup,
+            bool customization,
+            bool analytics,
+            bool integration,
+            bool apiAccess,
+            bool cloudStorage,
+            bool multiUser,
+            bool prioritySupport,
+            bool sla,
+            bool serviceLevel
         )
         {
             SubscriptionId = subscriptionId;
@@ -54,8 +54,6 @@ namespace VOLXYSEAT.DOMAIN.Models
             ServiceLevel = serviceLevel;
         }
 
-        // Propriedades
-        public Guid SubscriptionId { get; private set; }
         public bool Support { get; private set; }
         public bool Phone { get; private set; }
         public bool Email { get; private set; }
@@ -76,6 +74,7 @@ namespace VOLXYSEAT.DOMAIN.Models
         public bool PrioritySupport { get; private set; }
         public bool SLA { get; private set; }
         public bool ServiceLevel { get; private set; }
+        public Guid SubscriptionId { get; private set; }
         public Subscription Subscription { get; set; }
     }
 }

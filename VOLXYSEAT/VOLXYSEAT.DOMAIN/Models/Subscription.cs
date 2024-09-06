@@ -35,7 +35,6 @@ namespace VOLXYSEAT.DOMAIN.Models
         public DateTime CreatedOn { get; private set; }
         public DateTime UpdatedOn { get; private set; }
         public List<SubscriptionHistory> History => _histories;
-
         public void Close(string comment)
         {
             if (StatusId == SubscriptionStatus.Inactive)

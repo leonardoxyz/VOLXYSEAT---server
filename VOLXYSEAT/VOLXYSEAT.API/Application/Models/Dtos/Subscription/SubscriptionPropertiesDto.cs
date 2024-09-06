@@ -2,7 +2,7 @@
 {
     public class SubscriptionPropertiesDto
     {
-        public bool Support { get; set; }
+        public bool Support { get; set; } = false;
         public bool Phone { get; set; }
         public bool Email { get; set; }
         public bool Messenger { get; set; }

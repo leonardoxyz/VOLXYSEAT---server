@@ -26,7 +26,6 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
                 request.CreatedOn,
                 request.UpdatedOn
             );
-
             var subscriptionPropertiesDto = request.SubscriptionProperties;
             var subscriptionProperties = new SubscriptionProperties(
                 subscription.Id,
@@ -52,7 +51,11 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
                 subscriptionPropertiesDto.ServiceLevel
             );
 
+            Console.WriteLine(subscriptionProperties);
+
+
             subscription.SubscriptionProperties = subscriptionProperties;
+
 
             await _repository.AddAsync(subscription);
             var result = await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);

@@ -12,8 +12,8 @@ using VOLXYSEAT.INFRASTRUCTURE.Data;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240903195625_IdentityMigration")]
-    partial class IdentityMigration
+    [Migration("20240906151251_realtionshipSubscriptionUpdate")]
+    partial class realtionshipSubscriptionUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
