@@ -20,7 +20,7 @@ namespace VOLXYSEAT.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("/new-user")]
+        [HttpPost("new-user")]
         //[ProducesResponseType(typeof(UserViewModel), (int)HttpStatusCode.OK)]
         //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] RegisterUserCommand request)
@@ -29,7 +29,7 @@ namespace VOLXYSEAT.API.Controllers
             return result ? Ok() : BadRequest();
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserCommand request)
         {
             var result = await _mediator.Send(request);

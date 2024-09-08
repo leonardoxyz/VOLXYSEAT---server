@@ -14,6 +14,8 @@ using VOLXYSEAT.INFRASTRUCTURE.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var origin = "http://localhost:4200";
+
 // Add services to the container.
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -30,6 +32,16 @@ builder.Services.AddDbContext<DataContext>(options =>
         sqlOptions => sqlOptions.EnableRetryOnFailure()
     )
 );
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder
+            .WithOrigins(origin)
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 
 builder.Services.AddIdentityCore<User>(options =>
 {
@@ -63,7 +75,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddSingleton<IDbConnection>(provider =>
 {
- var connection = new SqlConnection(builder.Configuration.GetConnectionString("Homologation"));
+    var connection = new SqlConnection(builder.Configuration.GetConnectionString("Homologation"));
     connection.Open();
     return connection;
 });
@@ -96,6 +108,7 @@ else
     app.UseExceptionHandler("/Home/Error");
 }
 
+app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
