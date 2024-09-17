@@ -20,6 +20,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Data
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<SubscriptionHistory> SubscriptionHistories { get; set; }
         public DbSet<SubscriptionProperties> SubscriptionProperties { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
