@@ -82,6 +82,8 @@ builder.Services.AddSingleton<IDbConnection>(provider =>
 
 // Register repositories
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
 //builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Register UnitOfWork

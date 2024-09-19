@@ -1,11 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using VOLXYSEAT.API.Application.Commands.Account.Login;
 using VOLXYSEAT.API.Application.Commands.Account.Register;
-using VOLXYSEAT.API.Application.Models.ViewModel.User;
-using VOLXYSEAT.DOMAIN.Exceptions;
 
 namespace VOLXYSEAT.API.Controllers
 {

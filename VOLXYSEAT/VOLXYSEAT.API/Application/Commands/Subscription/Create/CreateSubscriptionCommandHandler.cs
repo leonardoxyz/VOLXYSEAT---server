@@ -51,8 +51,6 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
                 subscriptionPropertiesDto.ServiceLevel
             );
 
-            Console.WriteLine(subscriptionProperties);
-
 
             subscription.SubscriptionProperties = subscriptionProperties;
 

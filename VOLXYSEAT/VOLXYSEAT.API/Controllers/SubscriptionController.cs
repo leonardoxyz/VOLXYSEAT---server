@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using VOLXYSEAT.API.Application.Request;
 using Volxyseat.API.Application.Queries.Subscription;
 using VOLXYSEAT.API.Application.Commands.Subscription.Close;
 using VOLXYSEAT.API.Application.Commands.Subscription.Create;
 using VOLXYSEAT.API.Application.Models.ViewModel.Subscription;
-using VOLXYSEAT.API.Application.Request;
 
 namespace VOLXYSEAT.API.Controllers
 {
@@ -16,7 +16,7 @@ namespace VOLXYSEAT.API.Controllers
         private readonly IMediator _mediator;
         private readonly ILogger<SubscriptionController> _logger;
 
-        public SubscriptionController(IMediator mediator , ILogger<SubscriptionController> logger)
+        public SubscriptionController(IMediator mediator, ILogger<SubscriptionController> logger)
         {
             _mediator = mediator;
             _logger = logger;
