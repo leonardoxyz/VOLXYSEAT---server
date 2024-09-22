@@ -8,5 +8,5 @@ using VOLXYSEAT.DOMAIN.Models;
 namespace VOLXYSEAT.DOMAIN.Repositories;
 public interface ITransactionRepository : IRepository<Transaction, Guid>
 {
-    Transaction GetByClientId(Guid id);
+    Task<Transaction> GetByClientId(Guid id);
 }

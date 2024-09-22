@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VOLXYSEAT.API.Application.Commands.Transaction.Create;
+using VOLXYSEAT.API.Application.Extensions;
+using VOLXYSEAT.API.Application.Queries.Transaction.GetByUserId;
 
 namespace VOLXYSEAT.API.Controllers;
 [Route("api/[controller]")]
@@ -11,6 +13,18 @@ public class TransactionController : ControllerBase
     public TransactionController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByClientId(Guid id)
+    {
+        var query = new GetUserByIdQuery(id);
+        var result = await _mediator.Send(query);
+
+        if (result == null)
+            return BadRequest();
+
+        return Ok(result.ToTransactionDto());
     }
 
     [HttpPost]

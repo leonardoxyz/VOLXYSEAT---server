@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Dapper;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VOLXYSEAT.DOMAIN.Models;
 using VOLXYSEAT.DOMAIN.Repositories;
 using VOLXYSEAT.INFRASTRUCTURE.Data;
@@ -19,8 +15,12 @@ public class TransactionRepository : BaseRepository<Transaction, Guid>, ITransac
         _dbConnection = dbConnection;
         _context = context;
     }
-    public Transaction GetByClientId(Guid id)
+    public async Task<Transaction> GetByClientId(Guid id)
     {
-        throw new NotImplementedException();
+        var query = @"SELECT Id, SubscriptionId, ClientId, IssueDate FROM Transactions WHERE ClientId = @ClientId";
+        var parameters = new { ClientId = id };
+        var result = await _dbConnection.QueryAsync<Transaction>(query, parameters);
+        return result.FirstOrDefault();
     }
 }
+

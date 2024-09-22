@@ -15,6 +15,11 @@ public class Transaction : Entity
         IssueDate = DateTime.UtcNow;
 
     }
+
+    public Transaction()
+    {
+        
+    }
     public Guid SubscriptionId { get; set; }
     public Guid ClientId { get; set; }
     public DateTime IssueDate { get; set; }
