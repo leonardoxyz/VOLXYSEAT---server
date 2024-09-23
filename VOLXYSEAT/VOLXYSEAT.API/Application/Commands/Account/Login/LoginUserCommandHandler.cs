@@ -23,7 +23,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUs
 
     private LoginUserResponse AddLoginUserResponse(User user)
     {
-        return new LoginUserResponse(user.Name, _jwtService.JWTGenerateToken(user));
+        return new LoginUserResponse(user.Name, _jwtService.JWTGenerateToken(user), user.Email, user.Id);
     }
 
     public async Task<LoginUserResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
