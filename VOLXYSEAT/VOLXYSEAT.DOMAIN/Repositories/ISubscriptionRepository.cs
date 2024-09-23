@@ -7,6 +7,7 @@ namespace VOLXYSEAT.DOMAIN.Repositories
     {
         Task AddAsync(Subscription obj);
         Task<IEnumerable<Subscription>> GetAllAsync();
+
         Task<Subscription> GetByIdAsync(Guid id);
     }
 }

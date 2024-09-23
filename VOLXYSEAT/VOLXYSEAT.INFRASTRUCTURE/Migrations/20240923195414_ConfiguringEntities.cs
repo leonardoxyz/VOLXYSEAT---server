@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     /// <inheritdoc />
-    public partial class ConfigurationMigration : Migration
+    public partial class ConfiguringEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

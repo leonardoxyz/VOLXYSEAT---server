@@ -12,8 +12,8 @@ using VOLXYSEAT.INFRASTRUCTURE.Data;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240923185400_ConfigurationMigration")]
-    partial class ConfigurationMigration
+    [Migration("20240923195414_ConfiguringEntities")]
+    partial class ConfiguringEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

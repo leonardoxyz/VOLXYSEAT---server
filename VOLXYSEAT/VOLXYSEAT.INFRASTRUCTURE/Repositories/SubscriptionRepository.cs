@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using VOLXYSEAT.DOMAIN.Exceptions;
 using VOLXYSEAT.DOMAIN.Models;
@@ -9,30 +10,20 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Repositories
 {
     public class SubscriptionRepository : BaseRepository<Subscription, Guid>, ISubscriptionRepository
     {
-        private readonly IDbConnection _dbConnection;
         private readonly DataContext _context;
         public SubscriptionRepository(DataContext context, IDbConnection dbConnection) : base(context)
         {
-            _dbConnection = dbConnection;
             _context = context;
         }
 
         public async Task<Subscription> GetByIdAsync(Guid id)
         {
-            var query = "SELECT s.*, sp.* FROM Subscriptions s LEFT JOIN SubscriptionProperties sp ON s.Id = sp.SubscriptionId WHERE s.Id = @Id";
-            var parameters = new { Id = id };
-            var result = await _dbConnection.QueryAsync<Subscription, SubscriptionProperties, Subscription>(
-            query,
-            (subscription, properties) =>
-            {
-                subscription.SubscriptionProperties = properties;
-                properties.Subscription = subscription;
-                return subscription;
-            },
-            new { Id = id },
-            splitOn: "SubscriptionId"
-            );
-            return result.SingleOrDefault();
+            var subscription = await _context.Subscriptions
+                .AsNoTracking()
+                .Include(s => s.SubscriptionProperties)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            return subscription;
         }
 
         public async Task AddAsync(Subscription subscription)
@@ -51,23 +42,13 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Repositories
 
         public async Task<IEnumerable<Subscription>> GetAllAsync()
         {
-            var sql = @"
-            SELECT s.*, sp.*
-            FROM Subscriptions s
-            LEFT JOIN SubscriptionProperties sp ON s.Id = sp.SubscriptionId";
+            var subscriptions = await _context.Subscriptions
+                .AsNoTracking()
+                .Include(s => s.SubscriptionProperties) 
+                .ToListAsync();
 
-            var result = await _dbConnection.QueryAsync<Subscription, SubscriptionProperties, Subscription>(
-                sql,
-                (subscription, properties) =>
-                {
-                    subscription.SubscriptionProperties = properties;
-                    properties.Subscription = subscription;
-                    return subscription;
-                },
-                splitOn: "SubscriptionId"
-            );
-
-            return result;
+            return subscriptions;
         }
+
     }
 }
