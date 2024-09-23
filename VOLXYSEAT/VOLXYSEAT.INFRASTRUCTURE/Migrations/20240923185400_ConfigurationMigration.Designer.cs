@@ -12,8 +12,8 @@ using VOLXYSEAT.INFRASTRUCTURE.Data;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240919151522_CreateTransactionTable")]
-    partial class CreateTransactionTable
+    [Migration("20240923185400_ConfigurationMigration")]
+    partial class ConfigurationMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -165,13 +165,19 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
@@ -180,11 +186,12 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.SubscriptionHistory", b =>
@@ -285,7 +292,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
                     b.HasKey("SubscriptionId");
 
-                    b.ToTable("SubscriptionProperties");
+                    b.ToTable("SubscriptionProperties", (string)null);
                 });
 
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.Transaction", b =>
@@ -298,6 +305,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("IssueDate")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("SubscriptionId")
@@ -305,7 +313,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("VOLXYSEAT.DOMAIN.Models.User", b =>
@@ -432,6 +440,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                     b.HasOne("VOLXYSEAT.DOMAIN.Models.Subscription", null)
                         .WithMany("History")
                         .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Subscription_SubscriptionHistory");
                 });

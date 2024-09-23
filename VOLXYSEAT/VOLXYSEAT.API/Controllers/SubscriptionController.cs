@@ -68,9 +68,6 @@ namespace VOLXYSEAT.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Close(Guid id, [FromBody] SubscriptionChangeStatusWithCommentRequest request)
         {
-            if (request == null)
-                return BadRequest("Request cannot be null.");
-
             var command = new CloseSubscriptionCommand(id, request.Comment);
             var result = await _mediator.Send(command);
 

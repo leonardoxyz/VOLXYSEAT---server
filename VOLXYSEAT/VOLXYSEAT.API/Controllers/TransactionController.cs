@@ -5,7 +5,7 @@ using VOLXYSEAT.API.Application.Extensions;
 using VOLXYSEAT.API.Application.Queries.Transaction.GetByUserId;
 
 namespace VOLXYSEAT.API.Controllers;
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 [ApiController]
 public class TransactionController : ControllerBase
 {
@@ -21,10 +21,7 @@ public class TransactionController : ControllerBase
         var query = new GetUserByIdQuery(id);
         var result = await _mediator.Send(query);
 
-        if (result == null)
-            return BadRequest();
-
-        return Ok(result.ToTransactionDto());
+        return result != null ? Ok(result) : NotFound();
     }
 
     [HttpPost]

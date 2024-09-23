@@ -13,6 +13,8 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<SubscriptionProperties> builder)
         {
+            builder.ToTable("SubscriptionProperties");
+
             builder.HasKey(sp => sp.SubscriptionId);
 
             builder.Property(sp => sp.Support).IsRequired();
