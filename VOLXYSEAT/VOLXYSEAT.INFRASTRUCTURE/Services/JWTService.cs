@@ -37,7 +37,8 @@ public class JWTService
             Subject = new ClaimsIdentity(userClaims),
             Expires = DateTime.UtcNow.AddDays(int.Parse(_configuration["JWT:ExpiresInDays"])),
             SigningCredentials = credentials,
-            Issuer = _configuration["JWT:Issuer"]
+            Issuer = _configuration["JWT:Issuer"],
+            Audience = _configuration["JWT:Audience"]
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

@@ -9,7 +9,7 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
         SubscriptionEnum TypeId,
         SubscriptionStatus StatusId,
         string Description,
-        double Price,
+        decimal Price,
         DateTime CreatedOn,
         DateTime UpdatedOn,
         SubscriptionPropertiesDto SubscriptionProperties) : IRequest<bool>;

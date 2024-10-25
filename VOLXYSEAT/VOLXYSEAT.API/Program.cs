@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Data;
 using System.Text;
 using VOLXYSEAT.DOMAIN.Core;
@@ -23,9 +24,37 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Volxyseat API", Version = "v1" });
 
-// Configure Entity Framework
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Insira o token JWT no campo abaixo. Exemplo: Bearer {seu token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
+
+
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("Homologation"),
@@ -63,13 +92,24 @@ builder.Services.AddScoped<JWTService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
-    options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
-        ValidIssuer = builder.Configuration["JWT:Issuer"],
-        ValidateIssuer = true,
-        ValidateAudience = true,
+        var key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["JWT:Issuer"],
+
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["JWT:Audience"],
+
+            ValidateLifetime = true, 
+            ClockSkew = TimeSpan.Zero 
+        };
     });
 
 
@@ -80,16 +120,12 @@ builder.Services.AddSingleton<IDbConnection>(provider =>
     return connection;
 });
 
-// Register repositories
+
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
-//builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-// Register UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// Register MediatR and specify the assembly to scan for handlers
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 // Configure logging
@@ -103,7 +139,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API v1"));
 }
 else
 {
@@ -112,6 +148,7 @@ else
 
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

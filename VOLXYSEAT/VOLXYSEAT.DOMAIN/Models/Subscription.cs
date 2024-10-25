@@ -17,7 +17,7 @@ namespace VOLXYSEAT.DOMAIN.Models
             SubscriptionEnum typeId,
             SubscriptionStatus statusId,
             string description,
-            double price,
+            decimal price,
             DateTime createdOn,
             DateTime updatedOn)
         {
@@ -31,7 +31,7 @@ namespace VOLXYSEAT.DOMAIN.Models
         public SubscriptionEnum TypeId { get; private set; }
         public SubscriptionStatus StatusId { get; private set; }
         public string Description { get; private set; }
-        public double Price { get; private set; }
+        public decimal Price { get; private set; }
         public DateTime CreatedOn { get; private set; }
         public DateTime UpdatedOn { get; private set; }
         public List<SubscriptionHistory> History => _histories;

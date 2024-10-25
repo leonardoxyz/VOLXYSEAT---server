@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VOLXYSEAT.API.Application.Commands.Transaction.Create;
 using VOLXYSEAT.API.Application.Extensions;
@@ -24,6 +25,7 @@ public class TransactionController : ControllerBase
         return result != null ? Ok(result) : NotFound();
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] CreateTransactionCommand request)
     {
