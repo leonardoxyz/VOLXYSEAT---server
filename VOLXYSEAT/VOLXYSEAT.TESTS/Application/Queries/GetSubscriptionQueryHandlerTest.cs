@@ -48,8 +48,7 @@ namespace VOLXYSEAT.TESTS.Application.Queries
                 Status = subscription.StatusId,
                 Description = subscription.Description,
                 Price = subscription.Price,
-                CreatedOn = subscription.CreatedOn,
-                UpdatedOn = subscription.UpdatedOn
+                CreatedOn = subscription.CreatedOn
             };
 
             _repositoryMock.Setup(x => x.GetByIdAsync(subscription.Id)).ReturnsAsync(subscription);

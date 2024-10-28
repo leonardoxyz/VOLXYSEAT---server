@@ -15,17 +15,7 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Close
 
         public async Task<bool> Handle(CloseSubscriptionCommand request, CancellationToken cancellationToken)
         {
-            var subscription = await _repository.GetByIdAsync(request.Id);
-
-            if (subscription == null)
-                throw new VolxyseatDomainException("Subscription not found");
-
-            subscription.Close(request.Comment);
-
-            await _repository.UpdateAsync(subscription);
-            await _repository.UnitOfWork.SaveChangesAsync();
-
-            return true;
+            throw new NotImplementedException();
         }
     }
 }

@@ -30,10 +30,6 @@ public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
             .HasDefaultValue(0)
             .IsRequired();
 
-        builder.Property(s => s.UpdatedOn)
-            .ValueGeneratedOnAdd()
-            .IsRequired();
-
         builder.Property(s => s.CreatedOn)
             .ValueGeneratedOnAdd()
             .IsRequired();

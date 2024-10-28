@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.IdentityModel.Tokens;
 using VOLXYSEAT.API.Application.Extensions;
 using VOLXYSEAT.API.Application.Models.Dtos.Transaction;
 using VOLXYSEAT.DOMAIN.Exceptions;
@@ -19,7 +18,7 @@ public class CreateTransactionCommandHandler : IRequestHandler<CreateTransaction
     {
         if (request == null) throw new VolxyseatDomainException(nameof(request));
 
-        var transaction = new DOMAIN.Models.Transaction(request.SubscriptionId, request.ClientId);
+        var transaction = new DOMAIN.Models.Transaction(request.SubscriptionId, request.ClientId, request.CreatedOn);
 
         await _repository.AddAsync(transaction);
         await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);

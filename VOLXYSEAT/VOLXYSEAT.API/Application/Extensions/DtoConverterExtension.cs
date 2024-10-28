@@ -17,7 +17,6 @@ public static class DtoConverterExtension
         {
             SubscriptionId = transaction.SubscriptionId,
             ClientId = transaction.ClientId,
-            IssueDate = transaction.IssueDate,
         };
     }
 }

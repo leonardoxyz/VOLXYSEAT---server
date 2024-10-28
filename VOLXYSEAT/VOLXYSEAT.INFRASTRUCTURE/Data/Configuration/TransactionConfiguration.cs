@@ -22,8 +22,7 @@ internal class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
         builder.Property(t => t.ClientId) 
             .IsRequired();
 
-        builder.Property(t => t.IssueDate)
-            .ValueGeneratedOnAdd()
+        builder.Property(t => t.CreatedOn)
             .IsRequired();
     }
 }

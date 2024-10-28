@@ -32,7 +32,6 @@ namespace VOLXYSEAT.API.Application.Queries.Subscription
                 Description = subscription.Description,
                 Price = subscription.Price,
                 CreatedOn = subscription.CreatedOn,
-                UpdatedOn = subscription.UpdatedOn,
                 SubscriptionProperties = subscription.SubscriptionProperties != null
             ? new SubscriptionPropertiesDto
             {

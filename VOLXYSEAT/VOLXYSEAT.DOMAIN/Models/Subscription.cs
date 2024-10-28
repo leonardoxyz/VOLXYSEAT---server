@@ -18,45 +18,19 @@ namespace VOLXYSEAT.DOMAIN.Models
             SubscriptionStatus statusId,
             string description,
             decimal price,
-            DateTime createdOn,
-            DateTime updatedOn)
+            DateTime createdOn)
         {
             TypeId = typeId;
             StatusId = statusId;
             Description = description;
             Price = price;
             CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
         }
         public SubscriptionEnum TypeId { get; private set; }
         public SubscriptionStatus StatusId { get; private set; }
         public string Description { get; private set; }
         public decimal Price { get; private set; }
         public DateTime CreatedOn { get; private set; }
-        public DateTime UpdatedOn { get; private set; }
         public List<SubscriptionHistory> History => _histories;
-        public void Close(string comment)
-        {
-            if (StatusId == SubscriptionStatus.Inactive)
-                throw new VolxyseatDomainException("Subscription is already inactive.");
-
-            var oldStatus = StatusId;
-            StatusId = SubscriptionStatus.Inactive;
-            UpdatedOn = DateTime.UtcNow;
-
-            _histories.Add(new SubscriptionHistory(Id, "System", oldStatus, SubscriptionStatus.Inactive, comment));
-        }
-
-        public void Open(string comment)
-        {
-            if (StatusId == SubscriptionStatus.Active)
-                throw new VolxyseatDomainException("Subscription is already active.");
-
-            var oldStatus = StatusId;
-            StatusId = SubscriptionStatus.Active;
-            UpdatedOn = DateTime.UtcNow;
-
-            _histories.Add(new SubscriptionHistory(Id, "System", oldStatus, SubscriptionStatus.Active, comment));
-        }
     }
 }

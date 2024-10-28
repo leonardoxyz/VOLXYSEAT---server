@@ -3,4 +3,4 @@ using VOLXYSEAT.API.Application.Models.Dtos.Transaction;
 
 namespace VOLXYSEAT.API.Application.Commands.Transaction.Create;
 
-public record CreateTransactionCommand(Guid ClientId, Guid SubscriptionId) : IRequest<TransactionDto>;
+public record CreateTransactionCommand(Guid ClientId, Guid SubscriptionId, DateTime CreatedOn) : IRequest<TransactionDto>;

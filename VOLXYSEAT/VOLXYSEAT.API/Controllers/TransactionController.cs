@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VOLXYSEAT.API.Application.Commands.Transaction.Create;
-using VOLXYSEAT.API.Application.Extensions;
 using VOLXYSEAT.API.Application.Queries.Transaction.GetByUserId;
 
 namespace VOLXYSEAT.API.Controllers;
@@ -16,6 +15,7 @@ public class TransactionController : ControllerBase
         _mediator = mediator;
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetByClientId(Guid id)
     {

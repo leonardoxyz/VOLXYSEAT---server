@@ -3,12 +3,11 @@
 namespace VOLXYSEAT.DOMAIN.Models;
 public class Transaction : Entity
 {
-    public Transaction(Guid subscriptionId, Guid clientId)
+    public Transaction(Guid subscriptionId, Guid clientId, DateTime createdOn)
     {
         SubscriptionId = subscriptionId;
         ClientId = clientId;
-        IssueDate = DateTime.UtcNow;
-
+        CreatedOn = createdOn;
     }
 
     public Transaction()
@@ -17,5 +16,5 @@ public class Transaction : Entity
     }
     public Guid SubscriptionId { get; set; }
     public Guid ClientId { get; set; }
-    public DateTime IssueDate { get; set; }
+    public DateTime CreatedOn { get; private set; }
 }

@@ -6,9 +6,11 @@ using Volxyseat.API.Application.Queries.Subscription;
 using VOLXYSEAT.API.Application.Commands.Subscription.Close;
 using VOLXYSEAT.API.Application.Commands.Subscription.Create;
 using VOLXYSEAT.API.Application.Models.ViewModel.Subscription;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VOLXYSEAT.API.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class SubscriptionController : Controller
