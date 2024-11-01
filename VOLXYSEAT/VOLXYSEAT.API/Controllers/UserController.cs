@@ -1,6 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using VOLXYSEAT.API.Application.Commands.Account.Login;
+using VOLXYSEAT.API.Application.Commands.Account.Logout;
 using VOLXYSEAT.API.Application.Commands.Account.Register;
 
 namespace VOLXYSEAT.API.Controllers
@@ -30,6 +33,21 @@ namespace VOLXYSEAT.API.Controllers
         {
             var result = await _mediator.Send(request);
             return result != null ? Ok(result) : BadRequest();
+        }
+
+
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var result = await _mediator.Send(new LogoutCommand(Guid.Parse(userId)));
+
+            if(result)
+                return Ok(new {message = "Logout successful."});
+
+            return BadRequest(new { message = "Failed to logout." });
         }
     }
 }

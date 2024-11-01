@@ -91,6 +91,7 @@ builder.Services.AddIdentityCore<User>(options =>
 builder.Services.AddScoped<JWTService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddCookie(IdentityConstants.ApplicationScheme)
     .AddJwtBearer(options =>
     {
         var key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
@@ -107,10 +108,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidAudience = builder.Configuration["JWT:Audience"],
 
-            ValidateLifetime = true, 
-            ClockSkew = TimeSpan.Zero 
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
         };
     });
+
 
 
 builder.Services.AddSingleton<IDbConnection>(provider =>
