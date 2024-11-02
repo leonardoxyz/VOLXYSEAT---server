@@ -10,6 +10,7 @@ namespace VOLXYSEAT.API.Application.Models.Dtos.Subscription
         public string Description { get; set; }
         public decimal Price { get; set; }
         public DateTime CreatedOn { get; set; }
+        public string MercadoPagoPlanId { get; set; }
         public DateTime UpdatedOn { get; set; }
         public SubscriptionPropertiesDto SubscriptionProperties { get; set; }
     }

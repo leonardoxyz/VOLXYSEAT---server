@@ -23,7 +23,8 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
                 request.StatusId,
                 request.Description,
                 request.Price,
-                request.CreatedOn
+                request.CreatedOn,
+                request.MercadoPagoPlanId
             );
             var subscriptionPropertiesDto = request.SubscriptionProperties;
             var subscriptionProperties = new SubscriptionProperties(

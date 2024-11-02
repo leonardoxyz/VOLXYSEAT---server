@@ -11,6 +11,7 @@ namespace VOLXYSEAT.API.Application.Commands.Subscription.Create
         string Description,
         decimal Price,
         DateTime CreatedOn,
+        string MercadoPagoPlanId,
         DateTime UpdatedOn,
         SubscriptionPropertiesDto SubscriptionProperties) : IRequest<bool>;
 }

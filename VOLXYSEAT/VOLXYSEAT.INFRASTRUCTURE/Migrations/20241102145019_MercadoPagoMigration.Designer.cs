@@ -12,8 +12,8 @@ using VOLXYSEAT.INFRASTRUCTURE.Data;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241021235104_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20241102145019_MercadoPagoMigration")]
+    partial class MercadoPagoMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,6 +173,9 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("MercadoPagoPlanId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(18, 2)
@@ -184,10 +187,6 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -304,8 +303,7 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("IssueDate")
-                        .ValueGeneratedOnAdd()
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("SubscriptionId")

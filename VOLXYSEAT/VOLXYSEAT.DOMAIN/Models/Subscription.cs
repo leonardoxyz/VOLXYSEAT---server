@@ -18,19 +18,22 @@ namespace VOLXYSEAT.DOMAIN.Models
             SubscriptionStatus statusId,
             string description,
             decimal price,
-            DateTime createdOn)
+            DateTime createdOn,
+            string mercadoPagoPlanId)
         {
             TypeId = typeId;
             StatusId = statusId;
             Description = description;
             Price = price;
             CreatedOn = createdOn;
+            MercadoPagoPlanId = mercadoPagoPlanId;
         }
         public SubscriptionEnum TypeId { get; private set; }
         public SubscriptionStatus StatusId { get; private set; }
         public string Description { get; private set; }
         public decimal Price { get; private set; }
         public DateTime CreatedOn { get; private set; }
+        public string MercadoPagoPlanId { get; private set; }
         public List<SubscriptionHistory> History => _histories;
     }
 }
