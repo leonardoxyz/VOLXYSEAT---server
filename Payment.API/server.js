@@ -28,11 +28,6 @@ app.post('/create-preapproval-plan', async (req, res) => {
             id: "credit_card"
           }
         ],
-        payment_methods: [
-          {
-            id: "bolbradesco"
-          }
-        ]
       },
       back_url: "https://www.yoursite.com"
     },

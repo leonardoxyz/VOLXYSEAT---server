@@ -25,6 +25,7 @@ namespace VOLXYSEAT.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(SubscriptionViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(SubscriptionViewModel), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(Guid id)
@@ -42,6 +43,7 @@ namespace VOLXYSEAT.API.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(SubscriptionViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetAll()
