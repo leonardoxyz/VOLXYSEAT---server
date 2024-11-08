@@ -18,7 +18,7 @@ public class CreateTransactionCommandHandler : IRequestHandler<CreateTransaction
     {
         if (request == null) throw new VolxyseatDomainException(nameof(request));
 
-        var transaction = new DOMAIN.Models.Transaction(request.SubscriptionId, request.ClientId, request.CreatedOn);
+        var transaction = new DOMAIN.Models.Transaction(request.SubscriptionId, request.ClientId, request.MercadoPagoSubscriptionId);
 
         await _repository.AddAsync(transaction);
         await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
